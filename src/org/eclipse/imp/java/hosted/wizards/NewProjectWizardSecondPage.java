@@ -149,7 +149,7 @@ public abstract class NewProjectWizardSecondPage extends JavaCapabilityConfigura
                 IJavaProject project= JavaCore.create(fCurrProject);
                 Map<String, String> options= project.getOptions(false);
 
-                setComplianceOptions(options, compliance);
+                JavaCore.setComplianceOptions(compliance, options);
                 project.setOptions(options);
             }
         } finally {
@@ -162,36 +162,6 @@ public abstract class NewProjectWizardSecondPage extends JavaCapabilityConfigura
         }
     }
 
-    public static void setComplianceOptions(Map<String,String> map, String compliance) {
-        if (JavaCore.VERSION_1_6.equals(compliance)) {
-            map.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_6);
-            map.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
-            map.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_6);
-            map.put(JavaCore.COMPILER_PB_ASSERT_IDENTIFIER, JavaCore.ERROR);
-            map.put(JavaCore.COMPILER_PB_ENUM_IDENTIFIER, JavaCore.ERROR);
-        } else if (JavaCore.VERSION_1_5.equals(compliance)) {
-            map.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_5);
-            map.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_5);
-            map.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_5);
-            map.put(JavaCore.COMPILER_PB_ASSERT_IDENTIFIER, JavaCore.ERROR);
-            map.put(JavaCore.COMPILER_PB_ENUM_IDENTIFIER, JavaCore.ERROR);
-        } else if (JavaCore.VERSION_1_4.equals(compliance)) {
-            map.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_4);
-            map.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_3);
-            map.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_2);
-            map.put(JavaCore.COMPILER_PB_ASSERT_IDENTIFIER, JavaCore.WARNING);
-            map.put(JavaCore.COMPILER_PB_ENUM_IDENTIFIER, JavaCore.WARNING);
-        } else if (JavaCore.VERSION_1_3.equals(compliance)) {
-            map.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_3);
-            map.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_3);
-            map.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_1);
-            map.put(JavaCore.COMPILER_PB_ASSERT_IDENTIFIER, JavaCore.IGNORE);
-            map.put(JavaCore.COMPILER_PB_ENUM_IDENTIFIER, JavaCore.IGNORE);
-        } else {
-            throw new IllegalArgumentException("Unsupported compliance: " + compliance); //$NON-NLS-1$
-        }
-    }
-    
     /**
      * Set the autobuild to the value of the parameter and
      * return the old one.
