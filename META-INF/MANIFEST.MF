@@ -4,6 +4,8 @@ Bundle-Name: IMP Support for Java-Hosted Languages (Incubation)
 Bundle-SymbolicName: org.eclipse.imp.java.hosted
 Bundle-Version: 0.1.1
 Bundle-Activator: org.eclipse.imp.java.hosted.Activator
+Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
 Bundle-Vendor: rfuhrer@watson.ibm.com
 Require-Bundle: org.eclipse.core.filesystem,
  org.eclipse.core.resources,
@@ -18,7 +20,7 @@ Require-Bundle: org.eclipse.core.filesystem,
  org.eclipse.jface.text,
  org.eclipse.ui,
  org.eclipse.ui.ide
-Eclipse-LazyStart: true
 Export-Package: org.eclipse.imp.java.hosted.debug,
  org.eclipse.imp.java.hosted.wizards,
  org.eclipse.imp.java.hosted.wizards.fields
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
