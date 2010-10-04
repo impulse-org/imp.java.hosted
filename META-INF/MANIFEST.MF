@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: IMP Support for Java-Hosted Languages (Incubation)
 Bundle-SymbolicName: org.eclipse.imp.java.hosted
-Bundle-Version: 0.1.3.qualifier
+Bundle-Version: 0.2.1.qualifier
 Bundle-Activator: org.eclipse.imp.java.hosted.Activator
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
