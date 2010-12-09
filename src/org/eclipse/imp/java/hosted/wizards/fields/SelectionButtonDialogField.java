@@ -7,7 +7,6 @@
 *
 * Contributors:
 *    Robert Fuhrer (rfuhrer@watson.ibm.com) - initial API and implementation
-
 *******************************************************************************/
 
 /*
@@ -28,7 +27,6 @@ import org.eclipse.swt.widgets.Control;
  * Dialog Field containing a single button such as a radio or checkbox button.
  */
 public class SelectionButtonDialogField extends DialogField {
-
     private Button fButton;
 
     private boolean fIsSelected;
@@ -42,10 +40,10 @@ public class SelectionButtonDialogField extends DialogField {
      * Allowed button styles: SWT.RADIO, SWT.CHECK, SWT.TOGGLE, SWT.PUSH
      */
     public SelectionButtonDialogField(int buttonStyle) {
-	super();
-	fIsSelected= false;
-	fAttachedDialogFields= null;
-	fButtonStyle= buttonStyle;
+    	super();
+    	fIsSelected= false;
+    	fAttachedDialogFields= null;
+    	fButtonStyle= buttonStyle;
     }
 
     /**
@@ -53,7 +51,7 @@ public class SelectionButtonDialogField extends DialogField {
      * The attached field will be disabled if the selection button is not selected.
      */
     public void attachDialogField(DialogField dialogField) {
-	attachDialogFields(new DialogField[] { dialogField });
+        attachDialogFields(new DialogField[] { dialogField });
     }
 
     /**
@@ -61,24 +59,24 @@ public class SelectionButtonDialogField extends DialogField {
      * The attached fields will be disabled if the selection button is not selected.
      */
     public void attachDialogFields(DialogField[] dialogFields) {
-	fAttachedDialogFields= dialogFields;
-	for(int i= 0; i < dialogFields.length; i++) {
-	    dialogFields[i].setEnabled(fIsSelected);
-	}
+    	fAttachedDialogFields= dialogFields;
+    	for(int i= 0; i < dialogFields.length; i++) {
+    	    dialogFields[i].setEnabled(fIsSelected);
+    	}
     }
 
     /**
      * Returns <code>true</code> is  teh gived field is attached to the selection button.
      */
     public boolean isAttached(DialogField editor) {
-	if (fAttachedDialogFields != null) {
-	    for(int i= 0; i < fAttachedDialogFields.length; i++) {
-		if (fAttachedDialogFields[i] == editor) {
-		    return true;
-		}
-	    }
-	}
-	return false;
+        if (fAttachedDialogFields != null) {
+            for (int i= 0; i < fAttachedDialogFields.length; i++) {
+                if (fAttachedDialogFields[i] == editor) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // ------- layout helpers
@@ -87,26 +85,26 @@ public class SelectionButtonDialogField extends DialogField {
      * @see DialogField#doFillIntoGrid
      */
     public Control[] doFillIntoGrid(Composite parent, int nColumns) {
-	assertEnoughColumns(nColumns);
+        assertEnoughColumns(nColumns);
 
-	Button button= getSelectionButton(parent);
-	GridData gd= new GridData();
-	gd.horizontalSpan= nColumns;
-	gd.horizontalAlignment= GridData.FILL;
-	if (fButtonStyle == SWT.PUSH) {
-	    gd.widthHint= SWTUtil.getButtonWidthHint(button);
-	}
+        Button button= getSelectionButton(parent);
+        GridData gd= new GridData();
+        gd.horizontalSpan= nColumns;
+        gd.horizontalAlignment= GridData.FILL;
+        if (fButtonStyle == SWT.PUSH) {
+            gd.widthHint= SWTUtil.getButtonWidthHint(button);
+        }
 
-	button.setLayoutData(gd);
+        button.setLayoutData(gd);
 
-	return new Control[] { button };
+        return new Control[] { button };
     }
 
     /*
      * @see DialogField#getNumberOfControls
      */
     public int getNumberOfControls() {
-	return 1;
+        return 1;
     }
 
     // ------- ui creation			
@@ -117,59 +115,60 @@ public class SelectionButtonDialogField extends DialogField {
      * after.
      */
     public Button getSelectionButton(Composite group) {
-	if (fButton == null) {
-	    assertCompositeNotNull(group);
+        if (fButton == null) {
+            assertCompositeNotNull(group);
 
-	    fButton= new Button(group, fButtonStyle);
-	    fButton.setFont(group.getFont());
-	    fButton.setText(fLabelText);
-	    fButton.setEnabled(isEnabled());
-	    fButton.setSelection(fIsSelected);
-	    fButton.addSelectionListener(new SelectionListener() {
-		public void widgetDefaultSelected(SelectionEvent e) {
-		    doWidgetSelected(e);
-		}
+            fButton= new Button(group, fButtonStyle);
+            fButton.setFont(group.getFont());
+            fButton.setText(fLabelText);
+            fButton.setEnabled(isEnabled());
+            fButton.setSelection(fIsSelected);
+            fButton.addSelectionListener(new SelectionListener() {
+                public void widgetDefaultSelected(SelectionEvent e) {
+                    doWidgetSelected(e);
+                }
 
-		public void widgetSelected(SelectionEvent e) {
-		    doWidgetSelected(e);
-		}
-	    });
-	}
-	return fButton;
+                public void widgetSelected(SelectionEvent e) {
+                    doWidgetSelected(e);
+                }
+            });
+        }
+        return fButton;
     }
 
     private void doWidgetSelected(SelectionEvent e) {
-	if (isOkToUse(fButton)) {
-	    changeValue(fButton.getSelection());
-	}
+        if (isOkToUse(fButton)) {
+            changeValue(fButton.getSelection());
+        }
     }
 
     private void changeValue(boolean newState) {
-	if (fIsSelected != newState) {
-	    fIsSelected= newState;
-	    if (fAttachedDialogFields != null) {
-		boolean focusSet= false;
-		for(int i= 0; i < fAttachedDialogFields.length; i++) {
-		    fAttachedDialogFields[i].setEnabled(fIsSelected);
-		    if (fIsSelected && !focusSet) {
-			focusSet= fAttachedDialogFields[i].setFocus();
-		    }
-		}
-	    }
-	    dialogFieldChanged();
-	} else if (fButtonStyle == SWT.PUSH) {
-	    dialogFieldChanged();
-	}
+        if (fIsSelected != newState) {
+            fIsSelected= newState;
+            if (fAttachedDialogFields != null) {
+                boolean focusSet= false;
+                for (int i= 0; i < fAttachedDialogFields.length; i++) {
+                    fAttachedDialogFields[i].setEnabled(fIsSelected);
+                    if (fIsSelected && !focusSet) {
+                        focusSet= fAttachedDialogFields[i].setFocus();
+                    }
+                }
+            }
+            dialogFieldChanged();
+        } else if (fButtonStyle == SWT.PUSH) {
+            dialogFieldChanged();
+        }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField#setLabelText(java.lang.String)
      */
     public void setLabelText(String labeltext) {
-	fLabelText= labeltext;
-	if (isOkToUse(fButton)) {
-	    fButton.setText(labeltext);
-	}
+        fLabelText= labeltext;
+        if (isOkToUse(fButton)) {
+            fButton.setText(labeltext);
+        }
     }
 
     // ------ model access	
@@ -178,17 +177,17 @@ public class SelectionButtonDialogField extends DialogField {
      * Returns the selection state of the button.
      */
     public boolean isSelected() {
-	return fIsSelected;
+        return fIsSelected;
     }
 
     /**
      * Sets the selection state of the button.
      */
     public void setSelection(boolean selected) {
-	changeValue(selected);
-	if (isOkToUse(fButton)) {
-	    fButton.setSelection(selected);
-	}
+        changeValue(selected);
+        if (isOkToUse(fButton)) {
+            fButton.setSelection(selected);
+        }
     }
 
     // ------ enable / disable management
@@ -197,20 +196,19 @@ public class SelectionButtonDialogField extends DialogField {
      * @see DialogField#updateEnableState
      */
     protected void updateEnableState() {
-	super.updateEnableState();
-	if (isOkToUse(fButton)) {
-	    fButton.setEnabled(isEnabled());
-	}
+        super.updateEnableState();
+        if (isOkToUse(fButton)) {
+            fButton.setEnabled(isEnabled());
+        }
     }
 
     /*(non-Javadoc)
      * @see org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField#refresh()
      */
     public void refresh() {
-	super.refresh();
-	if (isOkToUse(fButton)) {
-	    fButton.setSelection(fIsSelected);
-	}
+        super.refresh();
+        if (isOkToUse(fButton)) {
+            fButton.setSelection(fIsSelected);
+        }
     }
-
 }
