@@ -45,7 +45,7 @@ public abstract class JavaBreakpointHandler implements IToggleBreakpointsHandler
         bkptAttributes.put("org.eclipse.jdt.debug.core.typeName", typeName);
 
         try {
-            IBreakpoint bkpt= JDIDebugModel.createStratumBreakpoint(file , fStratumID, srcFileName, file.getFullPath().toString(), null, lineNumber, -1, -1, 0, true, bkptAttributes);
+            IBreakpoint bkpt= JDIDebugModel.createStratumBreakpoint(file , fStratumID, srcFileName, file.getFullPath().removeFirstSegments(1).toString(), null, lineNumber, -1, -1, 0, true, bkptAttributes);
         } catch (CoreException e) {
             RuntimePlugin.getInstance().logException("Unable to set stratum breakpoint on file " + srcFileName, e);
         }
