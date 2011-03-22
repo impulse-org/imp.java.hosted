@@ -11,7 +11,9 @@
 
 package org.eclipse.imp.java.hosted;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
@@ -21,6 +23,46 @@ import org.eclipse.jdt.core.JavaModelException;
  * project's classpath.
  */
 public class BuildPathUtils {
+	
+	/**
+	 * 
+	 * @param file
+	 * @param project
+	 * @return a String representing the path of file, relative to the source directory that contains it, and without a file extension.
+	 * @throws JavaModelException 
+	 */
+	public static String getBareName(IFile file, IJavaProject project) throws JavaModelException{
+		return getBareName(file.getFullPath(), project);
+	}
+	
+	
+	/**
+	 * 
+	 * @param path
+	 * @param project
+	 * @return a String representing the path relative to the source directory that contains it, and without a file extension.
+	 * @throws JavaModelException 
+	 */
+	public static String getBareName(String path, IJavaProject project) throws JavaModelException{
+		return getBareName(new Path(path), project);
+	}
+	
+	/**
+	 * 
+	 * @param filePath
+	 * @param project
+	 * @return a String representing the filePath relative to the source directory that contains it, and without a file extension.
+	 * @throws JavaModelException 
+	 */
+	public static String getBareName(IPath filePath, IJavaProject project) throws JavaModelException {
+		for(final IClasspathEntry cpEntry : project.getRawClasspath()) {
+			if (cpEntry.getEntryKind() == IClasspathEntry.CPE_SOURCE && cpEntry.getPath().isPrefixOf(filePath) && !BuildPathUtils.isExcluded(filePath, cpEntry)) {
+				return filePath.makeRelativeTo(cpEntry.getPath()).removeFileExtension().toOSString();
+			}
+		}
+		return null;
+	}
+	
     /**
      * @param filePath
      * @param srcEntry
